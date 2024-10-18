@@ -1,14 +1,24 @@
 import "./index.css";
 import { Regions } from "../../utils/regions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 import { useDaemonContext } from "../../providers/DaemonProvider";
+// import { getAllRegions } from "../../api";
 
 const Home = () => {
   const { sRegion, setSRegion } = useDaemonContext();
   const [power, setPower] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const _getAllRegions = async () => {
+  //     const response = await getAllRegions();
+  //     console.log(response.data);
+  //   };
+
+  //   _getAllRegions()
+  // }, []);
 
   return (
     <div className="home">
@@ -28,7 +38,7 @@ const Home = () => {
           setPower(true);
 
           if (sRegion === -1) {
-            setSRegion(Math.floor(Math.random() * Regions.length));
+            setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
           };
 
           if (power) setPower(false);
@@ -51,7 +61,7 @@ const Home = () => {
             className="auto-btn"
             onClick={() => {
               if (sRegion === -1)
-                setSRegion(Math.floor(Math.random() * Regions.length));
+                setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
             }}
           >
             {sRegion === -1 ? (
@@ -62,7 +72,7 @@ const Home = () => {
             ) : (
               <>
                 <ReactCountryFlag
-                  countryCode={Regions[sRegion].code}
+                  countryCode={Object.entries(Regions)[sRegion][0]}
                   svg
                   aria-label="United States"
                   style={{
@@ -70,7 +80,7 @@ const Home = () => {
                     lineHeight: "2em",
                   }}
                 />
-                {Regions[sRegion].country}
+                {Object.entries(Regions)[sRegion][1]}
               </>
             )}
           </button>
@@ -80,7 +90,7 @@ const Home = () => {
       {power ? (
         <div>
           <ReactCountryFlag
-            countryCode={Regions[sRegion].code}
+            countryCode={Object.entries(Regions)[sRegion][0]}
             svg
             aria-label="United States"
             style={{
@@ -89,7 +99,7 @@ const Home = () => {
               marginRight: ".5em",
             }}
           />
-          {Regions[sRegion].country}
+          {Object.entries(Regions)[sRegion][1]}
         </div>
       ) : (
         <button className="region-btn" onClick={() => navigate("/regions")}>

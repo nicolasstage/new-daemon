@@ -9,7 +9,7 @@ const Region = () => {
   const navigate = useNavigate();
 
   const auto = () => {
-    setSRegion(Math.floor(Math.random() * Regions.length));
+    setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
     navigate("/");
   };
 
@@ -32,22 +32,21 @@ const Region = () => {
           <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%' }}>
             <p className="location">Locations</p>
             <div style={{ display: "flex", flexDirection: 'column', gap: '20px' }}>
-              {Regions.map((region, index) => {
+              {Object.entries(Regions).map(([code, country], index) => {
                 return (
                   <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
                     <div>
                       <ReactCountryFlag
-                        countryCode={region.code}
+                        countryCode={code}
                         svg
-                        aria-label="United States"
+                        aria-label={country}
                         style={{
                           fontSize: "2em",
                           lineHeight: "2em",
                         }}
                       />
                       <div className="region">
-                        <p>{region.country}</p>
-                        <p style={{ fontSize: "12px" }}>{region.area}</p>
+                        <p>{country}</p>
                       </div>
                     </div>
                     <p className="status">
@@ -59,7 +58,6 @@ const Region = () => {
                 );
               })}
             </div>
-
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ type DaemonProps = {
 
 const defaultContextValue: DaemonContext = {
   sRegion: -1,
-  setSRegion: () => {},
+  setSRegion: () => { },
 };
 
 const Daemon = createContext<DaemonContext>(defaultContextValue);
