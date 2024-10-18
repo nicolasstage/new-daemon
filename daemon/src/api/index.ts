@@ -10,9 +10,13 @@ const api = axios.create({
 });
 
 // Start Silent Pass
-export const startSilentPass = async (): Promise<AxiosResponse<any>> => {
+export const startSilentPass = async (
+  countryCode: string
+): Promise<AxiosResponse<any>> => {
   try {
-    const response = await api.post("/startSilentPass");
+    const response = await api.post("/startSilentPass", {
+      selectedCountry: countryCode, // Pass the selected country in the request body
+    });
     return response;
   } catch (error) {
     console.error("Error starting silent pass:", error);

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 import { useDaemonContext } from "../../providers/DaemonProvider";
-import { getAllRegions } from "../../api";
+import { getAllRegions, startSilentPass } from "../../api";
 
 const Home = () => {
   const { sRegion, setSRegion, setAllRegions, allRegions } = useDaemonContext();
@@ -30,6 +30,29 @@ const Home = () => {
     _getAllRegions()
   }, []);
 
+  const handleTogglePower = async () => {
+    let selectedCountryIndex = -1
+
+    try {
+      if (sRegion === -1) {
+        selectedCountryIndex = Math.floor(Math.random() * allRegions.length)
+        setSRegion(selectedCountryIndex);
+      } else {
+        selectedCountryIndex = sRegion
+      }
+
+      const selectedCountryCode = allRegions[selectedCountryIndex].code
+
+      console.log(selectedCountryCode)
+
+      await startSilentPass(selectedCountryCode)
+      setPower(true);
+      return
+    } catch (error) {
+      if (power) setPower(false);
+    }
+  };
+
   return (
     <div className="home">
       <h1 className="title">
@@ -44,15 +67,7 @@ const Home = () => {
       )}
       <button
         className="power"
-        onClick={() => {
-          setPower(true);
-
-          if (sRegion === -1) {
-            setSRegion(Math.floor(Math.random() * allRegions.length));
-          };
-
-          if (power) setPower(false);
-        }}
+        onClick={handleTogglePower}
       >
         {power ? (
           <img src="/assets/power.png" width={83} height={85} alt="" />
