@@ -33,6 +33,11 @@ const Home = () => {
   const handleTogglePower = async () => {
     let selectedCountryIndex = -1
 
+    if (power) {
+      setPower(false);
+      return
+    }
+
     try {
       if (sRegion === -1) {
         selectedCountryIndex = Math.floor(Math.random() * allRegions.length)
@@ -49,7 +54,7 @@ const Home = () => {
       setPower(true);
       return
     } catch (error) {
-      if (power) setPower(false);
+      setPower(false);
     }
   };
 
