@@ -1,4 +1,4 @@
-export const Regions = {
+export const mappedCountryCodes: any = {
   "US": "United States",
   "CA": "Canada",
   "GB": "United Kingdom",

@@ -1,15 +1,14 @@
 import ReactCountryFlag from "react-country-flag";
-import { Regions } from "../../utils/regions";
 import "./index.css";
 import { useDaemonContext } from "../../providers/DaemonProvider";
 import { useNavigate } from "react-router-dom";
 
 const Region = () => {
-  const { setSRegion } = useDaemonContext();
+  const { setSRegion, allRegions } = useDaemonContext();
   const navigate = useNavigate();
 
   const auto = () => {
-    setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
+    setSRegion(Math.floor(Math.random() * allRegions.length));
     navigate("/");
   };
 
@@ -32,21 +31,21 @@ const Region = () => {
           <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%' }}>
             <p className="location">Locations</p>
             <div style={{ display: "flex", flexDirection: 'column', gap: '20px' }}>
-              {Object.entries(Regions).map(([code, country], index) => {
+              {allRegions.map((region, index) => {
                 return (
                   <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
                     <div>
                       <ReactCountryFlag
-                        countryCode={code}
+                        countryCode={region.code}
                         svg
-                        aria-label={country}
+                        aria-label="United States"
                         style={{
                           fontSize: "2em",
                           lineHeight: "2em",
                         }}
                       />
                       <div className="region">
-                        <p>{country}</p>
+                        <p>{region.country}</p>
                       </div>
                     </div>
                     <p className="status">

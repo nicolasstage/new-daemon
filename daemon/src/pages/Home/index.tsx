@@ -1,24 +1,34 @@
 import "./index.css";
-import { Regions } from "../../utils/regions";
+import { mappedCountryCodes } from "../../utils/regions";
 import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 import { useDaemonContext } from "../../providers/DaemonProvider";
-// import { getAllRegions } from "../../api";
+import { getAllRegions } from "../../api";
 
 const Home = () => {
-  const { sRegion, setSRegion } = useDaemonContext();
+  const { sRegion, setSRegion, setAllRegions, allRegions } = useDaemonContext();
   const [power, setPower] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const _getAllRegions = async () => {
-  //     const response = await getAllRegions();
-  //     console.log(response.data);
-  //   };
+  useEffect(() => {
+    const _getAllRegions = async () => {
+      const response = await getAllRegions();
+      const tmpRegions = response.data;
 
-  //   _getAllRegions()
-  // }, []);
+      const treatedRegions = Array.from(new Set(tmpRegions.map((region: string) => {
+        const separatedRegion = region.split(".");
+        const code = separatedRegion[1];
+        const country = mappedCountryCodes[code];
+
+        return JSON.stringify({ code, country }); // Convert the object to a string for Set comparison
+      }))).map((regionStr: any) => JSON.parse(regionStr)); // Convert the string back to an object
+
+      setAllRegions(treatedRegions);
+    };
+
+    _getAllRegions()
+  }, []);
 
   return (
     <div className="home">
@@ -38,7 +48,7 @@ const Home = () => {
           setPower(true);
 
           if (sRegion === -1) {
-            setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
+            setSRegion(Math.floor(Math.random() * allRegions.length));
           };
 
           if (power) setPower(false);
@@ -61,7 +71,7 @@ const Home = () => {
             className="auto-btn"
             onClick={() => {
               if (sRegion === -1)
-                setSRegion(Math.floor(Math.random() * Object.entries(Regions).length));
+                setSRegion(Math.floor(Math.random() * allRegions.length));
             }}
           >
             {sRegion === -1 ? (
@@ -72,7 +82,7 @@ const Home = () => {
             ) : (
               <>
                 <ReactCountryFlag
-                  countryCode={Object.entries(Regions)[sRegion][0]}
+                  countryCode={allRegions[sRegion].code}
                   svg
                   aria-label="United States"
                   style={{
@@ -80,7 +90,7 @@ const Home = () => {
                     lineHeight: "2em",
                   }}
                 />
-                {Object.entries(Regions)[sRegion][1]}
+                {allRegions[sRegion].country}
               </>
             )}
           </button>
@@ -90,7 +100,7 @@ const Home = () => {
       {power ? (
         <div>
           <ReactCountryFlag
-            countryCode={Object.entries(Regions)[sRegion][0]}
+            countryCode={allRegions[sRegion].code}
             svg
             aria-label="United States"
             style={{
@@ -99,7 +109,7 @@ const Home = () => {
               marginRight: ".5em",
             }}
           />
-          {Object.entries(Regions)[sRegion][1]}
+          {allRegions[sRegion].country}
         </div>
       ) : (
         <button className="region-btn" onClick={() => navigate("/regions")}>
