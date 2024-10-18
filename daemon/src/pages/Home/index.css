@@ -3,10 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 24px;
 }
 
 h1 span {
   color: #8da8ff;
+}
+
+.title {
+  margin: 0;
 }
 
 .connection {
@@ -15,6 +20,7 @@ h1 span {
   border-radius: 16px;
   padding: 4px 16px;
   font-size: 14px;
+  margin: 0;
 }
 
 .connection span {
@@ -39,6 +45,7 @@ h1 span {
 .not-connected,
 .connected {
   font-weight: 700;
+  margin: 0;
 }
 
 .connected {
@@ -59,6 +66,7 @@ h1 span {
 .home-location {
   color: #b1b1b2;
   font-size: 11px;
+  margin: 0;
 }
 
 .region-btn {
@@ -72,7 +80,6 @@ h1 span {
   width: 252px;
   height: 56px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .region-btn div {

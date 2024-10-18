@@ -29,33 +29,38 @@ const Region = () => {
               Auto Select
             </div>
           </button>
-          <p className="location">Locations</p>
-          {Regions.map((region, index) => {
-            return (
-              <button onClick={() => handleRegion(index)}>
-                <div>
-                  <ReactCountryFlag
-                    countryCode={region.code}
-                    svg
-                    aria-label="United States"
-                    style={{
-                      fontSize: "2em",
-                      lineHeight: "2em",
-                    }}
-                  />
-                  <div className="region">
-                    <p>{region.country}</p>
-                    <p style={{ fontSize: "12px" }}>{region.area}</p>
-                  </div>
-                </div>
-                <p className="status">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </p>
-              </button>
-            );
-          })}
+          <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%' }}>
+            <p className="location">Locations</p>
+            <div style={{ display: "flex", flexDirection: 'column', gap: '20px' }}>
+              {Regions.map((region, index) => {
+                return (
+                  <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
+                    <div>
+                      <ReactCountryFlag
+                        countryCode={region.code}
+                        svg
+                        aria-label="United States"
+                        style={{
+                          fontSize: "2em",
+                          lineHeight: "2em",
+                        }}
+                      />
+                      <div className="region">
+                        <p>{region.country}</p>
+                        <p style={{ fontSize: "12px" }}>{region.area}</p>
+                      </div>
+                    </div>
+                    <p className="status">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+
+          </div>
         </div>
       </div>
       <button className="back" onClick={() => navigate("/")}>

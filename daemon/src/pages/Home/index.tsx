@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <h1>
+      <h1 className="title">
         Silent Pass <span>Proxy</span>
       </h1>
       {power ? (
@@ -25,7 +25,12 @@ const Home = () => {
       <button
         className="power"
         onClick={() => {
-          if (sRegion !== -1) setPower(true);
+          setPower(true);
+
+          if (sRegion === -1) {
+            setSRegion(Math.floor(Math.random() * Regions.length));
+          };
+
           if (power) setPower(false);
         }}
       >
@@ -41,7 +46,7 @@ const Home = () => {
         <p className="not-connected">Not Connected</p>
       )}
       {!power && (
-        <>
+        <div>
           <button
             className="auto-btn"
             onClick={() => {
@@ -70,7 +75,7 @@ const Home = () => {
             )}
           </button>
           <p className="home-location">Selected Location</p>
-        </>
+        </div>
       )}
       {power ? (
         <div>
