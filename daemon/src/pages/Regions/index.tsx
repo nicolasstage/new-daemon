@@ -19,12 +19,14 @@ const Region = () => {
 
   return (
     <div className="regions">
-      <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', cursor: 'pointer' }} onClick={() => navigate("/")}>
-        <button className="back">
-          <img src="/assets/left.png" />
-        </button>
+      <div style={{ marginRight: '80px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', cursor: 'pointer' }} onClick={() => navigate("/")}>
+          <button className="back">
+            <img src="/assets/left.png" />
+          </button>
 
-        <h1 style={{ paddingBottom: '10px' }}>Select Region</h1>
+          <h1 style={{ paddingBottom: '10px' }}>Select Region</h1>
+        </div>
       </div>
 
       <div className="board">
