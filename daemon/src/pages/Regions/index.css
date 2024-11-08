@@ -1,6 +1,5 @@
 .regions {
-  max-width: 500px;
-  margin: 0 auto;
+  width: 30vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,9 +125,6 @@ p {
 }
 
 .back {
-  position: absolute;
-  left: 10px;
-  top: 40px;
   background-color: transparent;
   border: none;
   cursor: pointer;

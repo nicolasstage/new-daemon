@@ -19,7 +19,14 @@ const Region = () => {
 
   return (
     <div className="regions">
-      <h1>Select Region</h1>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', cursor: 'pointer' }} onClick={() => navigate("/")}>
+        <button className="back">
+          <img src="/assets/left.png" />
+        </button>
+
+        <h1 style={{ paddingBottom: '10px' }}>Select Region</h1>
+      </div>
+
       <div className="board">
         <div className="areas">
           <button className="auto" onClick={auto}>
@@ -28,9 +35,9 @@ const Region = () => {
               Auto Select
             </div>
           </button>
-          <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%' }}>
+          <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%', alignItems: 'center' }}>
             <p className="location">Locations</p>
-            <div style={{ display: "flex", flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: "flex", flexDirection: 'column', gap: '20px', width: '80%', alignItems: 'center' }}>
               {allRegions.map((region, index) => {
                 return (
                   <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
@@ -60,9 +67,6 @@ const Region = () => {
           </div>
         </div>
       </div>
-      <button className="back" onClick={() => navigate("/")}>
-        <img src="/assets/left.png" />
-      </button>
     </div>
   );
 };
