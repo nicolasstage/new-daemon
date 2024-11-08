@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 import { useDaemonContext } from "../../providers/DaemonProvider";
-import { getAllRegions, startSilentPass } from "../../api";
+import { getAllRegions, getServerIpAddress, startSilentPass } from "../../api";
 
 const Home = () => {
   const { sRegion, setSRegion, setAllRegions, allRegions } = useDaemonContext();
+  const [serverIpAddress, setServerIpAddress] = useState<string>('')
   const [power, setPower] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -27,7 +28,15 @@ const Home = () => {
       setAllRegions(treatedRegions);
     };
 
+    const _getServerIpAddress = async () => {
+      const response = await getServerIpAddress();
+      const tmpIpAddress = response.data;
+
+      setServerIpAddress(tmpIpAddress?.ip);
+    };
+
     _getAllRegions()
+    _getServerIpAddress()
   }, []);
 
   const handleTogglePower = async () => {
@@ -80,11 +89,13 @@ const Home = () => {
           <img src="/assets/not-power.png" width={83} height={85} alt="" />
         )}
       </button>
+
       {power ? (
         <p className="connected">Connected</p>
       ) : (
         <p className="not-connected">Not Connected</p>
       )}
+
       {!power && (
         <div>
           <button
@@ -117,20 +128,43 @@ const Home = () => {
           <p className="home-location">Selected Location</p>
         </div>
       )}
+
       {power ? (
-        <div>
-          <ReactCountryFlag
-            countryCode={allRegions[sRegion].code}
-            svg
-            aria-label="United States"
-            style={{
-              fontSize: "2em",
-              lineHeight: "2em",
-              marginRight: ".5em",
-            }}
-          />
-          {allRegions[sRegion].country}
-        </div>
+        <>
+          <div>
+            <ReactCountryFlag
+              countryCode={allRegions[sRegion].code}
+              svg
+              aria-label="United States"
+              style={{
+                fontSize: "2em",
+                lineHeight: "2em",
+                marginRight: ".5em",
+              }}
+            />
+            {allRegions[sRegion].country}
+
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: '20px', backgroundColor: '#1B1B1D', borderRadius: '16px', padding: '20px', width: 300, fontSize: '14px' }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: '4px' }}>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <div>Socks 5 Address:</div>
+                <div style={{ color: '#B1B1B2' }}>{serverIpAddress}</div>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
+                <div>Port: </div>
+                <div style={{ color: '#B1B1B2' }}>3002</div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
+              <div>PAC URL:</div>
+              <div>{"http://" + serverIpAddress + "/pac"}</div>
+            </div>
+          </div>
+        </>
       ) : (
         <button className="region-btn" onClick={() => navigate("/regions")}>
           <div>
