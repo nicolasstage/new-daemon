@@ -8,7 +8,7 @@ import { getAllRegions, getServerIpAddress, startSilentPass } from "../../api";
 
 const Home = () => {
   const { sRegion, setSRegion, setAllRegions, allRegions } = useDaemonContext();
-  const [serverIpAddress, setServerIpAddress] = useState<string>('')
+  const [serverIpAddress, setServerIpAddress] = useState<string>("");
   const [power, setPower] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -17,13 +17,17 @@ const Home = () => {
       const response = await getAllRegions();
       const tmpRegions = response.data;
 
-      const treatedRegions = Array.from(new Set(tmpRegions.map((region: string) => {
-        const separatedRegion = region.split(".");
-        const code = separatedRegion[1];
-        const country = mappedCountryCodes[code];
+      const treatedRegions = Array.from(
+        new Set(
+          tmpRegions.map((region: string) => {
+            const separatedRegion = region.split(".");
+            const code = separatedRegion[1];
+            const country = mappedCountryCodes[code];
 
-        return JSON.stringify({ code, country }); // Convert the object to a string for Set comparison
-      }))).map((regionStr: any) => JSON.parse(regionStr)); // Convert the string back to an object
+            return JSON.stringify({ code, country }); // Convert the object to a string for Set comparison
+          })
+        )
+      ).map((regionStr: any) => JSON.parse(regionStr)); // Convert the string back to an object
 
       setAllRegions(treatedRegions);
     };
@@ -35,33 +39,33 @@ const Home = () => {
       setServerIpAddress(tmpIpAddress?.ip);
     };
 
-    _getAllRegions()
-    _getServerIpAddress()
+    _getAllRegions();
+    _getServerIpAddress();
   }, []);
 
   const handleTogglePower = async () => {
-    let selectedCountryIndex = -1
+    let selectedCountryIndex = -1;
 
     if (power) {
       setPower(false);
-      return
+      return;
     }
 
     try {
       if (sRegion === -1) {
-        selectedCountryIndex = Math.floor(Math.random() * allRegions.length)
+        selectedCountryIndex = Math.floor(Math.random() * allRegions.length);
         setSRegion(selectedCountryIndex);
       } else {
-        selectedCountryIndex = sRegion
+        selectedCountryIndex = sRegion;
       }
 
-      const selectedCountryCode = allRegions[selectedCountryIndex].code
+      const selectedCountryCode = allRegions[selectedCountryIndex].code;
 
-      console.log(selectedCountryCode)
+      console.log(selectedCountryCode);
 
-      await startSilentPass(selectedCountryCode)
+      await startSilentPass(selectedCountryCode);
       setPower(true);
-      return
+      return;
     } catch (error) {
       setPower(false);
     }
@@ -74,15 +78,16 @@ const Home = () => {
       </h1>
       {power ? (
         <p className="connection">
-          Your connection is <span>protected!</span>
+          <span style={{ color: "#E4E2E4" }}>Your connection </span>
+          <span style={{ color: "#9FBFE5" }}>is protected!</span>
         </p>
       ) : (
-        <p className="connection">Your connection is not protected!</p>
+        <p className="connection">
+          <span style={{ color: "#E4E2E4" }}>Your connection </span>
+          <span style={{ color: "#F9DEDC" }}>is not protected!</span>
+        </p>
       )}
-      <button
-        className="power"
-        onClick={handleTogglePower}
-      >
+      <button className="power" onClick={handleTogglePower}>
         {power ? (
           <img src="/assets/power.png" width={83} height={85} alt="" />
         ) : (
@@ -143,23 +148,53 @@ const Home = () => {
               }}
             />
             {allRegions[sRegion].country}
-
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: '20px', backgroundColor: '#1B1B1D', borderRadius: '16px', padding: '20px', width: 300, fontSize: '14px' }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: '4px' }}>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              backgroundColor: "#1B1B1D",
+              borderRadius: "16px",
+              padding: "20px",
+              width: 300,
+              fontSize: "14px",
+            }}
+          >
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
                 <div>Socks 5 Address:</div>
-                <div style={{ color: '#B1B1B2' }}>{serverIpAddress}</div>
+                <div style={{ color: "#B1B1B2" }}>{serverIpAddress}</div>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
                 <div>Port: </div>
-                <div style={{ color: '#B1B1B2' }}>3002</div>
+                <div style={{ color: "#B1B1B2" }}>3002</div>
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <div>PAC URL:</div>
               <div>{"http://" + serverIpAddress + "/pac"}</div>
             </div>
@@ -174,6 +209,8 @@ const Home = () => {
           <img src="/assets/right.png" width={4} height={8} alt="" />
         </button>
       )}
+
+      <p className="footer">© 2024 CoNET.network. All rights reserved</p>
     </div>
   );
 };

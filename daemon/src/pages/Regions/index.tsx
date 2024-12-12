@@ -3,6 +3,8 @@ import "./index.css";
 import { useDaemonContext } from "../../providers/DaemonProvider";
 import { useNavigate } from "react-router-dom";
 
+// import countryIcon from "/assets/";
+
 const Region = () => {
   const { setSRegion, allRegions } = useDaemonContext();
   const navigate = useNavigate();
@@ -19,13 +21,21 @@ const Region = () => {
 
   return (
     <div className="regions">
-      <div style={{ marginRight: '80px' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', cursor: 'pointer' }} onClick={() => navigate("/")}>
+      <div style={{ marginRight: "80px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "16px",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/")}
+        >
           <button className="back">
             <img src="/assets/left.png" />
           </button>
 
-          <h1 style={{ paddingBottom: '10px' }}>Select Region</h1>
+          <h1 style={{ paddingBottom: "10px" }}>Select Region</h1>
         </div>
       </div>
 
@@ -37,12 +47,31 @@ const Region = () => {
               Auto Select
             </div>
           </button>
-          <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%', alignItems: 'center' }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
             <p className="location">Locations</p>
-            <div style={{ display: "flex", flexDirection: 'column', gap: '20px', width: '80%', alignItems: 'center' }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                width: "80%",
+                alignItems: "center",
+              }}
+            >
               {allRegions.map((region, index) => {
                 return (
-                  <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
+                  <button
+                    style={{ margin: 0 }}
+                    onClick={() => handleRegion(index)}
+                  >
                     <div>
                       <ReactCountryFlag
                         countryCode={region.code}
@@ -57,11 +86,7 @@ const Region = () => {
                         <p>{region.country}</p>
                       </div>
                     </div>
-                    <p className="status">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </p>
+                    <img src="/assets/country_icon.svg" alt="country-icon" />
                   </button>
                 );
               })}

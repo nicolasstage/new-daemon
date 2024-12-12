@@ -26,12 +26,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #8da8ff;
+  background: #9fbfe5fe;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8da8ff;
+  background: #9fbfe5fe;
 }
 
 .areas {
@@ -44,9 +44,9 @@
 }
 
 .areas button.auto {
-  background-image: linear-gradient(90deg, #8d4be1, #577dff);
+  background-color: #191919;
+  border: 1px solid #3f3f40;
   height: 80px;
-  border: none;
   margin: 0;
 }
 
@@ -62,7 +62,7 @@
   padding: 0 20px;
   cursor: pointer;
   background-color: #191919;
-  border: 1px solid #f6f1f2;
+  border: 1px solid #3f3f40;
   margin: 0 10px;
 }
 

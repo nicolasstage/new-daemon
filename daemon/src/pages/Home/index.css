@@ -7,7 +7,7 @@
 }
 
 h1 span {
-  color: #8da8ff;
+  color: #9fbfe5fe;
 }
 
 .title {
@@ -49,7 +49,7 @@ h1 span {
 }
 
 .connected {
-  color: #79f8ff;
+  color: #deecfdfe;
 }
 
 .auto-btn {
@@ -110,4 +110,9 @@ h1 span {
 
 p {
   text-align: center !important;
+}
+
+.footer {
+  font-size: 11px;
+  color: #989899;
 }
