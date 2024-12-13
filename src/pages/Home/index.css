@@ -44,6 +44,7 @@ h1 span {
 
 .not-connected,
 .connected {
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
 }
@@ -74,7 +75,9 @@ h1 span {
   justify-content: space-between;
   align-items: center;
   border: 1px solid white;
-  border-radius: 32px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 16px;
   padding: 16px;
   background-color: transparent;
   width: 252px;

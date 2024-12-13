@@ -203,10 +203,10 @@ const Home = () => {
       ) : (
         <button className="region-btn" onClick={() => navigate("/regions")}>
           <div>
-            <img src="/assets/global.png" width={22} height={22} alt="" />
+            <img src="/assets/global.png" width={24} height={24} alt="" />
             <p>Select Region</p>
           </div>
-          <img src="/assets/right.png" width={4} height={8} alt="" />
+          <img src="/assets/right.png" width={6} height={10} alt="" />
         </button>
       )}
 
