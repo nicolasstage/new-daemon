@@ -3,8 +3,6 @@ import "./index.css";
 import { useDaemonContext } from "../../providers/DaemonProvider";
 import { useNavigate } from "react-router-dom";
 
-// import countryIcon from "/assets/";
-
 const Region = () => {
   const { setSRegion, allRegions } = useDaemonContext();
   const navigate = useNavigate();
