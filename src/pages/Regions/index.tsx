@@ -4,72 +4,37 @@ import { useDaemonContext } from "../../providers/DaemonProvider";
 import { useNavigate } from "react-router-dom";
 
 const Region = () => {
-  const { setSRegion, allRegions } = useDaemonContext();
+  const { setSRegion, allRegions, setIsRandom } = useDaemonContext();
   const navigate = useNavigate();
 
-  const auto = () => {
-    setSRegion(Math.floor(Math.random() * allRegions.length));
-    navigate("/");
-  };
-
   const handleRegion = (code: number) => {
+    if (code === -1) setIsRandom(true);
+    else setIsRandom(false);
+
     setSRegion(code);
     navigate("/");
   };
 
   return (
     <div className="regions">
-      <div style={{ marginRight: "80px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "16px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate("/")}
-        >
+      <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', cursor: 'pointer' }} onClick={() => navigate("/")}>
           <button className="back">
-            <img src="/assets/left.png" />
+            <img style={{ width: "32px", height: "32px" }} src="/assets/left.svg" />
           </button>
 
-          <h1 style={{ paddingBottom: "10px" }}>Select Region</h1>
+          <h1 style={{ paddingBottom: '10px' }}>Select Region</h1>
         </div>
       </div>
 
       <div className="board">
         <div className="areas">
-          <button className="auto" onClick={auto}>
-            <div>
-              <img src="/assets/auto.png" />
-              Auto Select
-            </div>
-          </button>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
+          <div style={{ display: "flex", flexDirection: 'column', gap: '12px', width: '100%', alignItems: 'center' }}>
             <p className="location">Locations</p>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                width: "80%",
-                alignItems: "center",
-              }}
-            >
+            <div style={{ display: "flex", flexDirection: 'column', gap: '20px', width: '80%', alignItems: 'center' }}>
               {allRegions.map((region, index) => {
                 return (
-                  <button
-                    style={{ margin: 0 }}
-                    onClick={() => handleRegion(index)}
-                  >
+                  <button style={{ margin: 0 }} onClick={() => handleRegion(index)}>
                     <div>
                       <ReactCountryFlag
                         countryCode={region.code}
@@ -84,7 +49,11 @@ const Region = () => {
                         <p>{region.country}</p>
                       </div>
                     </div>
-                    <img src="/assets/country_icon.svg" alt="country-icon" />
+                    <p className="status">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </p>
                   </button>
                 );
               })}

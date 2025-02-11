@@ -1,0 +1,17 @@
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cta-buttons > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cta-buttons > div > p {
+  text-align: left;
+  font-size: 12px;
+  color: #989899;
+}

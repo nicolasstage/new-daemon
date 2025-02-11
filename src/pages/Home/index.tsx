@@ -5,11 +5,19 @@ import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 import { useDaemonContext } from "../../providers/DaemonProvider";
 import { getAllRegions, getServerIpAddress, startSilentPass } from "../../api";
+import Header from "../../components/Header";
+import BlobWrapper from "../../components/BlobWrapper";
+import CopyProxyInfo from "../../components/CopyProxyInfo";
+import Footer from "../../components/Footer";
+import ClickableItem from "../../components/ClickableItem";
+import RegionSelector from "../../components/RegionSelector";
 
 const Home = () => {
   const { sRegion, setSRegion, setAllRegions, allRegions } = useDaemonContext();
   const [serverIpAddress, setServerIpAddress] = useState<string>("");
   const [power, setPower] = useState<boolean>(false);
+  const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
+  const [isConnectionLoading, setIsConnectionLoading] = useState<boolean>(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,147 +79,96 @@ const Home = () => {
     }
   };
 
-  return (
-    <div className="home">
-      <h1 className="title">
-        Silent Pass <span>Proxy</span>
-      </h1>
-      {power ? (
-        <p className="connection">
-          <span style={{ color: "#E4E2E4" }}>Your connection </span>
-          <span style={{ color: "#9FBFE5" }}>is protected!</span>
-        </p>
-      ) : (
-        <p className="connection">
-          <span style={{ color: "#E4E2E4" }}>Your connection </span>
-          <span style={{ color: "#F9DEDC" }}>is not protected!</span>
-        </p>
-      )}
-      <button className="power" onClick={handleTogglePower}>
-        {power ? (
-          <img src="/assets/power.png" width={83} height={85} alt="" />
-        ) : (
-          <img src="/assets/not-power.png" width={83} height={85} alt="" />
-        )}
-      </button>
 
-      {power ? (
-        <p className="connected">Connected</p>
-      ) : (
-        <p className="not-connected">Not Connected</p>
-      )}
+  const RenderButton = () => {
+    if (isConnectionLoading)
+      return (
+        <div className="button-wrapper">
+          <BlobWrapper>
+            <button
+              className="power"
+            >
+              <img src="/assets/loading-ring.png" className="loading-spinning power-icon" alt="" />
+            </button>
+          </BlobWrapper>
 
-      {!power && (
-        <div>
-          <button
-            className="auto-btn"
-            onClick={() => {
-              if (sRegion === -1)
-                setSRegion(Math.floor(Math.random() * allRegions.length));
-            }}
-          >
-            {sRegion === -1 ? (
-              <>
-                <img src="/assets/auto.png" width={24} height={24} alt="" />
-                Auto Select
-              </>
-            ) : (
-              <>
-                <ReactCountryFlag
-                  countryCode={allRegions[sRegion].code}
-                  svg
-                  aria-label="United States"
-                  style={{
-                    fontSize: "2em",
-                    lineHeight: "2em",
-                  }}
-                />
-                {allRegions[sRegion].country}
-              </>
-            )}
-          </button>
-          <p className="home-location">Selected Location</p>
+          <p className="connected">Loading...</p>
         </div>
-      )}
+      )
 
-      {power ? (
-        <>
-          <div>
-            <ReactCountryFlag
-              countryCode={allRegions[sRegion].code}
-              svg
-              aria-label="United States"
-              style={{
-                fontSize: "2em",
-                lineHeight: "2em",
-                marginRight: ".5em",
-              }}
-            />
-            {allRegions[sRegion].country}
+    if (power)
+      return (
+        <div className="button-wrapper">
+          <BlobWrapper>
+            <button
+              className="power"
+              onClick={handleTogglePower}
+            >
+              <img src="/assets/power.png" className="power-icon" alt="" />
+            </button>
+          </BlobWrapper>
+
+          <div className="current-mined">
+            <strong>Total time used</strong>
+            <p>01:01:59</p>
           </div>
+        </div>
+      )
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-              backgroundColor: "#1B1B1D",
-              borderRadius: "16px",
-              padding: "20px",
-              width: 300,
-              fontSize: "14px",
-            }}
+    return (
+      <div className="button-wrapper">
+        <BlobWrapper>
+          <button
+            className="power"
+            onClick={handleTogglePower}
           >
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Socks 5 Address:</div>
-                <div style={{ color: "#B1B1B2" }}>{serverIpAddress}</div>
-              </div>
+            <img src="/assets/not-power.png" className="power-icon" alt="" />
+          </button>
+        </BlobWrapper>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Port: </div>
-                <div style={{ color: "#B1B1B2" }}>3002</div>
-              </div>
+        <div className="current-mined">
+          <strong>Total time used</strong>
+          <p>01:01:59</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <Header />
+      <div className="home">
+        {!isInitialLoading ? (
+          <>
+            <button
+              className="power"
+            >
+              <img className="loading-spinning" src="/assets/silent-pass-logo-grey.png" width={85} height={85} alt="" />
+            </button>
+
+            <p className="not-connected">Welcome to Silent Pass</p>
+          </>
+        ) : (
+          <>
+            <div>
+              <img src="/assets/header-title.svg"></img>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>PAC URL:</div>
-              <div>{"http://" + serverIpAddress + "/pac"}</div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <button className="region-btn" onClick={() => navigate("/regions")}>
-          <div>
-            <img src="/assets/global.png" width={24} height={24} alt="" />
-            <p>Select Region</p>
-          </div>
-          <img src="/assets/right.png" width={6} height={10} alt="" />
-        </button>
-      )}
+            <RenderButton />
 
-      <p className="footer">© 2024 CoNET.network. All rights reserved</p>
-    </div>
+            <CopyProxyInfo />
+
+            <RegionSelector title={allRegions?.[sRegion]?.country} regionCode={allRegions?.[sRegion]?.code} action={() => navigate("/regions")} />
+          </>
+        )}
+
+        {/* <button className="vip-button" onClick={() => navigate("/vip")}>
+          VIP Service
+        </button> */}
+      </div>
+
+      <Footer />
+    </>
   );
 };
 

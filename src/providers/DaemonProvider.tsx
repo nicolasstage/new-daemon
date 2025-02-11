@@ -5,6 +5,18 @@ type DaemonContext = {
   setSRegion: (region: number) => void;
   allRegions: Region[];
   setAllRegions: (regions: Region[]) => void;
+  closestRegion: nodes_info[];
+  setClosestRegion: (region: nodes_info[]) => void;
+  isRandom: boolean;
+  setIsRandom: (val: boolean) => void;
+  miningData: any;
+  setMiningData: (data: any) => void;
+  profile: any;
+  setProfile: (profile: any) => void;
+  isMiningUp: boolean;
+  setIsMiningUp: (val: boolean) => void;
+  setaAllNodes: (data: nodes_info[]) => void
+  getAllNodes: nodes_info[]
 };
 
 type DaemonProps = {
@@ -16,6 +28,18 @@ const defaultContextValue: DaemonContext = {
   setSRegion: () => { },
   allRegions: [],
   setAllRegions: () => { },
+  closestRegion: [],
+  setClosestRegion: () => { },
+  isRandom: true,
+  setIsRandom: () => { },
+  miningData: null,
+  setMiningData: () => { },
+  profile: null,
+  setProfile: () => { },
+  isMiningUp: false,
+  setIsMiningUp: () => { },
+  setaAllNodes: () => { },
+  getAllNodes: []
 };
 
 const Daemon = createContext<DaemonContext>(defaultContextValue);
@@ -26,11 +50,17 @@ export function useDaemonContext() {
 }
 
 export function DaemonProvider({ children }: DaemonProps) {
-  const [sRegion, setSRegion] = useState<number>(-1);
+  const [isRandom, setIsRandom] = useState<boolean>(true);
+  const [sRegion, setSRegion] = useState<number>(0);
   const [allRegions, setAllRegions] = useState<Region[]>([]);
+  const [closestRegion, setClosestRegion] = useState<any>(null);
+  const [miningData, setMiningData] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [isMiningUp, setIsMiningUp] = useState<boolean>(false);
+  const [getAllNodes, setaAllNodes] = useState<nodes_info[]>([]);
 
   return (
-    <Daemon.Provider value={{ sRegion, setSRegion, allRegions, setAllRegions }}>
+    <Daemon.Provider value={{ sRegion, setSRegion, allRegions, setAllRegions, closestRegion, setClosestRegion, isRandom, setIsRandom, miningData, setMiningData, profile, setProfile, isMiningUp, setIsMiningUp, getAllNodes, setaAllNodes }}>
       {children}
     </Daemon.Provider>
   );
