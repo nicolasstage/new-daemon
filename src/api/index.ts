@@ -11,11 +11,11 @@ const api = axios.create({
 
 // Start Silent Pass
 export const startSilentPass = async (
-  countryCode: string
+  vpnInfo: Native_StartVPNObj
 ): Promise<AxiosResponse<any>> => {
   try {
     const response = await api.post("/startSilentPass", {
-      selectedCountry: countryCode, // Pass the selected country in the request body
+      vpnInfo: vpnInfo,
     });
     return response;
   } catch (error) {

@@ -143,3 +143,17 @@ interface Window {
     };
   };
 }
+
+type Native_node = {
+  country: string;
+  ip_addr: string;
+  region: string;
+  armoredPublicKey: string;
+  nftNumber: string;
+};
+
+type Native_StartVPNObj = {
+  entryNodes: Native_node[];
+  privateKey: string;
+  exitNode: Native_node[];
+};

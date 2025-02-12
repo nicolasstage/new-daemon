@@ -76,7 +76,7 @@ const testClosestRegion = async (callback: () => void) => {
   async.mapLimit(
     allRegions,
     allRegions.length,
-    async (r: string, next: any) => {
+    async (r: string, next) => {
       const node = getRandomNodeFromRegion(r);
       if (!node?.domain) {
         return;
@@ -88,7 +88,7 @@ const testClosestRegion = async (callback: () => void) => {
       const delay = endTime - startTime;
       testRegion.push({ node, delay });
     },
-    (err: any) => {
+    (err) => {
       console.log(`testClosestRegion success!`);
       testRegion.sort((a, b) => a.delay - b.delay);
       testRegion.forEach((n) => {
@@ -152,7 +152,6 @@ const getAllNodes = async (
       if (nodeInfo?.pgp) {
         i = n.nftNumber;
         currentScanNodeNumber++;
-        console.log(currentScanNodeNumber);
         n.region = nodeInfo.regionName;
         const _country = n.region.split(".")[1];
         country.set(_country, true);
@@ -275,7 +274,7 @@ const startMiningV2 = async (
         return;
       }
 
-      console.log("_startMiningV2 success", _data);
+      // console.log("_startMiningV2 success", _data);
       const response: nodeResponse = JSON.parse(_data);
 
       if (first) {
@@ -312,7 +311,7 @@ const startMiningV2 = async (
         response.currentCCNTP = "0";
       }
       callback(response);
-      validator(response, profile, entryNode);
+      // validator(response, profile, entryNode);
       return ["success", JSON.stringify(response)];
     }
   );

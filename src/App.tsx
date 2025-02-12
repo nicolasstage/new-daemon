@@ -1,21 +1,47 @@
-import React from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-
 import { Home, Region } from "./pages";
-import { DaemonProvider } from "./providers/DaemonProvider";
-import FAQ from "./pages/FAQ";
-import ConfigDevice from "./pages/ConfigDevice";
-import Vip from "./pages/Vip";
-import Wallet from "./pages/Wallet";
-import Settings from "./pages/Settings";
-import Passcode from "./pages/Passcode";
-import Languages from "./pages/Languages";
-import Applications from "./pages/Applications";
-import Subscription from "./pages/Subscription";
-import Support from "./pages/Support";
+import { useDaemonContext } from "./providers/DaemonProvider";
+import { createOrGetWallet } from "./services/wallets";
+import { getAllNodes, startMiningV2 } from "./services/mining";
+import { CoNET_Data } from "./utils/globals";
+import { listenProfileVer } from "./services/listeners";
+import Vip from './pages/Vip';
+import Wallet from './pages/Wallet';
+import Settings from './pages/Settings';
+import Languages from './pages/Languages';
+import Applications from './pages/Applications';
+import Subscription from './pages/Subscription';
+import Support from './pages/Support';
+import FAQ from './pages/FAQ';
+import ConfigDevice from './pages/ConfigDevice';
+import Passcode from './pages/Passcode';
+
+global.Buffer = require('buffer').Buffer;
 
 function App() {
+  const { setProfile, setMiningData, allRegions, setClosestRegion, setaAllNodes } = useDaemonContext();
+
+  useEffect(() => {
+    const init = async () => {
+      await createOrGetWallet();
+      listenProfileVer(setProfile);
+
+      await getAllNodes(allRegions, setClosestRegion, (allNodes: nodes_info[]) => {
+        setaAllNodes(allNodes)
+
+        if (!CoNET_Data || !CoNET_Data?.profiles) {
+          return
+        }
+
+        startMiningV2(CoNET_Data?.profiles?.[0], allRegions, setMiningData);
+      });
+    };
+
+    init();
+  }, []);
+
   return (
     <div className="App">
       <Router>

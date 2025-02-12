@@ -4,6 +4,7 @@ import Separator from '../Separator';
 import CopyAccountInfo from './CopyAccountInfo';
 import { wallets } from './walletsMock';
 import { useDaemonContext } from '../../providers/DaemonProvider';
+import Skeleton from '../Skeleton';
 
 export default function AccountList() {
   const [openAccountList, setOpenAccountList] = useState<string[]>([]);
@@ -26,11 +27,10 @@ export default function AccountList() {
           <h3>SilentPass Account</h3>
         </div>
         <div className="info-card">
-          {
-            profile?.tokens.map((token: any) => (
-              <div className="info-wrapper">
-
-                {token.name === "cCNTP" && (
+          <div className="info-wrapper">
+            {
+              profile?.tokens ? Object.values(profile?.tokens)?.map((token: any) => (
+                token.name === "cCNTP" && (
                   <>
                     <p>{token?.network}</p>
                     <div>
@@ -39,10 +39,9 @@ export default function AccountList() {
                     </div>
                   </>
                 )
-                }
-              </div>
-            ))
-          }
+              )) : <Skeleton width='100%' height='20px' />
+            }
+          </div>
           <Separator />
           <CopyAccountInfo wallet={profile} />
         </div>
