@@ -14,8 +14,19 @@ export default function Wallet() {
       <AccountList />
 
       <div className="cta-buttons">
+        <div className="highlight-1">
+          <button>
+            <p>Transfer Silent Pass Passport</p>
+          </button>
+        </div>
+        <div className="highlight-2">
+          <button>
+            <img src="/assets/conet-outline.svg" alt="Platform" />
+            <p>Purchase Silent Pass Passport</p>
+          </button>
+        </div>
         <div>
-          <button onClick={() => window.open("https://platform.conet.network", "_blank")}>
+          <button>
             <img src="/assets/conet-white.svg" alt="Platform" />
             <p>Open CONET Platform</p>
           </button>

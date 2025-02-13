@@ -36,14 +36,6 @@ export default function Settings() {
     setTheme((prev) => prev === 'light' ? 'dark' : 'light')
   }
 
-  function turnPasscodeOn() {
-    // pending
-  }
-
-  function changePasscode() {
-    // pending
-  }
-
   const optionGroups = useMemo<OptionGroups>(() => ([
     {
       heading: "General",
@@ -55,12 +47,12 @@ export default function Settings() {
           childrenText: "English",
           action: () => navigate("/languages")
         },
-        {
+        /* {
           id: 2,
           icon: applicationIcon,
           title: "Applications",
           action: () => navigate("/applications")
-        },
+        }, */
         {
           id: 3,
           icon: themeIcon,
@@ -76,36 +68,14 @@ export default function Settings() {
           id: 1,
           icon: lockIcon,
           title: "Turn passcode on",
-          action: turnPasscodeOn,
+          action: () => navigate("/passcode/new"),
         },
         {
           id: 2,
           icon: lockIcon,
           title: "Change passcode",
-          action: () => navigate("/passcode")
+          action: () => navigate("/passcode/change")
         }
-      ]
-    }, {
-      heading: "Add-on",
-      items: [
-        {
-          id: 1,
-          icon: adsBlockIcon,
-          title: "Ads Block",
-          childrenText: "soon",
-        },
-        {
-          id: 2,
-          icon: extraRewardIcon,
-          title: "Extra Reward",
-          childrenText: "soon",
-        },
-        {
-          id: 3,
-          icon: splitTunnelingIcon,
-          title: "Split Tunelling",
-          childrenText: "soon",
-        },
       ]
     },
   ]), [navigate]);

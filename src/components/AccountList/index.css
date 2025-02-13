@@ -13,9 +13,19 @@
   transition: height .20s ease;
 }
 
+.account-wrapper .account-main-card img {
+  transform: rotate(90deg);
+
+  transition: transform .12s ease-in-out;
+}
+
+.account-wrapper.active .account-main-card img {
+  transform: rotate(270deg);
+}
+
 .account-wrapper.active {
   /* should create the animation */
-  height: 555px;
+  height: 600px;
 }
 
 .account-wrapper.active .account-main-card {
@@ -38,6 +48,15 @@
 
   position: relative;
   z-index: 1;
+}
+
+.account-main-card div:last-child {
+  width: 100%;
+  padding-right: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .account-wrapper:not(.active) .account-main-card:hover {
@@ -110,4 +129,42 @@
 
 .copy-div button {
   cursor: pointer;
+}
+
+.copy-div span {
+  font-size: 12px;
+  color: #676768;
+  display: block;
+  width: 240px;
+}
+
+.copy-div:not(:last-child) div span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.button-list img {
+  filter: grayscale(1);
+}
+
+.button-list svg {
+  width: 20px;
+  height: 20px;
+}
+
+.button-list .hidden svg {
+  margin-top: 2px;
+}
+
+.copy-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

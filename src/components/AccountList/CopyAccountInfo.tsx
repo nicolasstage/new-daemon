@@ -3,6 +3,9 @@ import Separator from '../Separator';
 import { CoNET_Data } from '../../utils/globals';
 import Skeleton from '../Skeleton';
 
+import { ReactComponent as VisibilityOnIcon } from "./assets/visibility-on.svg";
+import { ReactComponent as VisibilityOffIcon } from "./assets/visibility-off.svg";
+
 let copyTimeoutId: NodeJS.Timeout;
 
 export default function CopyAccountInfo({ wallet }: any) {
@@ -11,8 +14,11 @@ export default function CopyAccountInfo({ wallet }: any) {
     info: "",
   });
 
-  function handleCopy(info: string) {
+  const [isAddressHidden, setIsAddressHidden] = useState(true);
+  const [isKeyHidden, setIsKeyHidden] = useState(true);
+  const [isWordsHidden, setIsWordsHidden] = useState(true);
 
+  function handleCopy(info: string) {
     let value = '';
 
     if (info === 'address')
@@ -39,16 +45,33 @@ export default function CopyAccountInfo({ wallet }: any) {
       <div className="copy-div">
         {wallet?.keyID ?
           <>
-            <p>Copy Wallet Address</p>
-            <button onClick={() => handleCopy("address")}>
+            <div className="copy-text">
+              <p>Copy Wallet Address</p>
               {
-                (copied.address === wallet?.keyID && copied.info === "address") ? (
-                  <img src="/assets/check.svg" alt="Copy icon" />
-                ) : (
-                  <img src="/assets/copy-purple.svg" alt="Copy icon" />
-                )
+                isAddressHidden ?
+                  <div style={{ filter: 'blur(3px)' }}>
+                    <span>{wallet.keyID}</span>
+                  </div>
+                  :
+                  <span>{wallet.keyID}</span>
               }
-            </button>
+            </div>
+            <div className="button-list">
+              <button onClick={() => handleCopy("address")}>
+                {
+                  (copied.address === wallet?.keyID && copied.info === "address") ? (
+                    <img src="/assets/check.svg" alt="Copy icon" />
+                  ) : (
+                    <img src="/assets/copy-purple.svg" alt="Copy icon" />
+                  )
+                }
+              </button>
+              <button className={isAddressHidden ? "hidden" : ""} onClick={() => setIsAddressHidden((prev) => !prev)}>
+                {
+                  isAddressHidden ? <VisibilityOffIcon /> : <VisibilityOnIcon />
+                }
+              </button>
+            </div>
           </>
           : <Skeleton width='100%' height='20px' />
         }
@@ -57,16 +80,32 @@ export default function CopyAccountInfo({ wallet }: any) {
       <div className="copy-div">
         {wallet?.privateKeyArmor ?
           <>
-            <p>Copy Private Key</p>
-            <button onClick={() => handleCopy("key")}>
+            <div className="copy-text">
+              <p>Copy Private Key</p>
               {
-                (copied.address === wallet?.privateKeyArmor && copied.info === "key") ? (
-                  <img src="/assets/check.svg" alt="Copy icon" />
-                ) : (
-                  <img src="/assets/copy-purple.svg" alt="Copy icon" />
-                )
+                isKeyHidden ?
+                  <div style={{ filter: 'blur(3px)' }}>
+                    <span>{wallet.privateKeyArmor}</span>
+                  </div>
+                  : <span>{wallet.privateKeyArmor}</span>
               }
-            </button>
+            </div>
+            <div className="button-list">
+              <button onClick={() => handleCopy("key")}>
+                {
+                  (copied.address === wallet?.privateKeyArmor && copied.info === "key") ? (
+                    <img src="/assets/check.svg" alt="Copy icon" />
+                  ) : (
+                    <img src="/assets/copy-purple.svg" alt="Copy icon" />
+                  )
+                }
+              </button>
+              <button className={isKeyHidden ? "hidden" : ""} onClick={() => setIsKeyHidden((prev) => !prev)}>
+                {
+                  isKeyHidden ? <VisibilityOffIcon /> : <VisibilityOnIcon />
+                }
+              </button>
+            </div>
           </>
           : <Skeleton width='100%' height='20px' />
         }
@@ -75,16 +114,33 @@ export default function CopyAccountInfo({ wallet }: any) {
       <div className="copy-div">
         {CoNET_Data?.mnemonicPhrase ?
           <>
-            <p>Copy 12 words</p>
-            <button onClick={() => handleCopy("words")}>
+            <div className="copy-text">
+              <p>Copy 12 words</p>
               {
-                (copied.address === CoNET_Data?.mnemonicPhrase && copied.info === "words") ? (
-                  <img src="/assets/check.svg" alt="Copy icon" />
-                ) : (
-                  <img src="/assets/copy-purple.svg" alt="Copy icon" />
-                )
+                isWordsHidden ?
+                  <div style={{ filter: 'blur(3px)' }}>
+                    <span>{CoNET_Data?.mnemonicPhrase || ''}</span>
+                  </div>
+                  :
+                  <span>{CoNET_Data?.mnemonicPhrase || ''}</span>
               }
-            </button>
+            </div>
+            <div className="button-list">
+              <button onClick={() => handleCopy("words")}>
+                {
+                  (copied.address === CoNET_Data?.mnemonicPhrase && copied.info === "words") ? (
+                    <img src="/assets/check.svg" alt="Copy icon" />
+                  ) : (
+                    <img src="/assets/copy-purple.svg" alt="Copy icon" />
+                  )
+                }
+              </button>
+              <button className={isWordsHidden ? "hidden" : ""} onClick={() => setIsWordsHidden((prev) => !prev)}>
+                {
+                  isWordsHidden ? <VisibilityOffIcon /> : <VisibilityOnIcon />
+                }
+              </button>
+            </div>
           </>
           : <Skeleton width='20px' height='20px' />
         }

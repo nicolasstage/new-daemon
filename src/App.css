@@ -44,34 +44,6 @@
   padding: 42px 16px 100px;
 }
 
-.cta-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.cta-buttons button {
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 24px;
-  text-align: left;
-  font-size: 16px;
-
-  background: linear-gradient(93.49deg, #4e72b6 0%, #9fbfe5 100%),
-    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.cta-buttons button img {
-  width: 26px;
-  height: 26px;
-}
-
 .text-display {
   text-align: left;
 

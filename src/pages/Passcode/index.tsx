@@ -6,7 +6,11 @@ import { ReactComponent as VisibilityOffIcon } from "./assets/visibility-off.svg
 
 import "./index.css";
 
-export default function Passcode() {
+interface PasscodeProps {
+  new?: boolean;
+}
+
+export default function Passcode(props: PasscodeProps) {
   const [currentPasscode, setCurrentPasscode] = useState('');
   const [newPasscode, setNewPasscode] = useState('');
   const [confirmPasscode, setConfirmPasscode] = useState('');
@@ -24,7 +28,7 @@ export default function Passcode() {
   }
 
   function handleSubmit() {
-    if (hasPasscode) {
+    if (!props.new) {
       changePasscode();
       return;
     }
@@ -32,17 +36,14 @@ export default function Passcode() {
     createPasscode();
   }
 
-  // determine whether the screen should be create new passcode or change passcode
-  const hasPasscode = false;
-
   return (
     <div className="page-container">
       <BackButton to="/settings" />
-      <h1>{hasPasscode ? "Change passcode" : "Create new passcode"}</h1>
+      <h1>{!props.new ? "Change passcode" : "Create new passcode"}</h1>
 
       <div className="form-wrapper">
         {
-          hasPasscode && (
+          !props.new && (
             <div className="form-item current-form">
               <p>Current passcode</p>
               <div>

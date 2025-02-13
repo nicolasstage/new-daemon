@@ -52,7 +52,8 @@ function App() {
           <Route path="/vip" element={<Vip />}></Route>
           <Route path="/wallet" element={<Wallet />}></Route>
           <Route path="/settings" element={<Settings />}></Route>
-          <Route path="/passcode" element={<Passcode />}></Route>
+          <Route path="/passcode/new" element={<Passcode new />}></Route>
+          <Route path="/passcode/change" element={<Passcode />}></Route>
           <Route path="/languages" element={<Languages />}></Route>
           <Route path="/applications" element={<Applications />}></Route>
           <Route path="/subscription" element={<Subscription />}></Route>
