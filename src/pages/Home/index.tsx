@@ -211,7 +211,7 @@ const Home = () => {
       privateKey
     }
 
-    await startSilentPass(startVPNMessageObject);
+    // await startSilentPass(startVPNMessageObject);
 
     setTimeout(() => {
       setIsConnectionLoading(false)
