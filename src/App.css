@@ -43,30 +43,3 @@
 
   padding: 42px 16px 100px;
 }
-
-.text-display {
-  text-align: left;
-
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.text-display div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.text-display h1 {
-  font-size: 32px;
-  margin-top: -18px;
-}
-
-.text-display h2 {
-  font-size: 18px;
-}
-
-.text-display p {
-  color: #989899;
-}
